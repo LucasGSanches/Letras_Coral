@@ -1,23 +1,24 @@
 import Paragraph from "../components/paragraph"
 import { useState } from 'react'
 
-function Home({ chosenMusic }) {
-  const [search, setSearch] = useState("")
+function Home({ search, setPage }) {
+  //const [search, setSearch] = useState("")
   //const [text, setText] = useState("")
   const [music, setMusic] = useState({lyrics : [{text : "", singer : ""}]})
-
   
-  
+  if(search == ""){
+    return(
+      <>
+        <button onClick={() => setPage("list")}>Buscar</button>
+      </>
+    )
+  }
+  carregarPagina(search, setMusic);
   return (
     <>
-        <input
-            type="text"
-            placeholder="Digite o nome da música"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-        />
+        
 
-        <button onClick={() => carregarPagina(search, setMusic)}>Buscar</button>
+        <button onClick={() => setPage("list")}>Buscar</button>
         {music.lyrics.map((paragraph, index) => (
           <Paragraph
             key={index}
@@ -30,23 +31,20 @@ function Home({ chosenMusic }) {
 }
 
 async function carregarPagina(nomeMusica, setFunction) {
-    const caminho = `${import.meta.env.BASE_URL}/musics/${nomeMusica}.json`;
+    const musicas = import.meta.glob("../data/*.json");
 
-    const response = await fetch(caminho);
+    const caminho = `../data/${nomeMusica}.json`;
 
-    const texto = await response.json();
+    if (!musicas[caminho]) {
+        console.error("Música não encontrada:", caminho);
+        return;
+    }
 
-    setFunction(texto);
+    const modulo = await musicas[caminho]();
+    setFunction(modulo.default);
 }
 
-async function getFileNames(){
-  const arquivos = import.meta.glob("./data/*.json");
-  const lista = Object.keys(arquivos).map(caminho => ({
-    caminho: caminho,
-    nome: caminho.split("/").pop().replace(".json", "")
-  }));
-  return lista;
-}
+
 
 
 export default Home;

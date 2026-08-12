@@ -5,13 +5,18 @@ import List from "./pages/List"
 
 function App() {
   const [page, setPage] = useState("home");
-  const [music, setMusic] = useState("");
+  const [search, setSearch] = useState("");
+
+  function getMusic(title){
+    setSearch(title);
+    setPage("home");
+  }
   
   if(page === "list"){
-    return <List/>
+    return <List getMusic={getMusic}/>
   }
 
-  return <Home chosenMusic={music}/>
+  return <Home search={search} setPage={setPage}/>
 }
 
 
