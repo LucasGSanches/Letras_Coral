@@ -1,6 +1,6 @@
 function TitleMusic({name, func}) {
     return(
-        <div onClick={func}>
+        <div onClick={func} className="musicOption">
             <p>{name}</p>
         </div>
     )

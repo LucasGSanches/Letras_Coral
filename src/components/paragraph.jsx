@@ -1,8 +1,8 @@
 function Paragraph({text, singer}) {
     return(
-        <div>
+        <p className="paragraph">
             {singer}: {text}
-        </div>
+        </p>
     )
 }
 

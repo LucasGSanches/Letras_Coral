@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import TitleMusic from "../components/titleMusic"
+import './List.css'
 
 function List({getMusic}){
     const [search, setSearch] = useState("");
     //const [titles, setTitles] = useState([]);
     //setTitles(getFileNames());
-    const titles = getFileNames()
+    const titles = getFileNames();
+
+    const filteredTitles = titles.filter((title) =>
+        title.name.toLowerCase().includes(search.toLowerCase())
+    );
+
     return(
         <>
             <input
@@ -15,7 +21,7 @@ function List({getMusic}){
                 onChange={(e) => setSearch(e.target.value)}
             />
             
-            {titles.map((title) => (
+            {filteredTitles.map((title) => (
                 <TitleMusic
                     key={title.root}
                     func={() => getMusic(title.name)}

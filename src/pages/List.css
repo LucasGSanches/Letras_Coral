@@ -1,0 +1,11 @@
+.musicOption {
+    margin: 6px;
+    border: solid #1a1c35 4px;
+    border-radius: 5px;
+    background-color: #1a1c35
+}
+
+input {
+    min-height: 30px;
+    margin: 15px;
+}
